@@ -299,7 +299,7 @@ const drawLastMonth = obssHydro => {
         }
       },
       yearLabel: {
-        formatter: '{start} S1',
+        formatter: '{start}',
         textStyle: {
           color: '#fff'
         }
