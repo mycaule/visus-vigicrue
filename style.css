@@ -1,0 +1,14 @@
+body {
+  height: 100%;
+  margin: 0;
+}
+
+#graph1 {
+  width: 800px;
+  height:600px;
+}
+
+#graph2 {
+  width: 800px;
+  height:600px;
+}
