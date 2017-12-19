@@ -1236,7 +1236,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = defaults;
 
-},{"./utils":55,"process":54,"./adapters/http":244,"./helpers/normalizeHeaderName":245,"./adapters/xhr":244}],246:[function(require,module,exports) {
+},{"./utils":55,"process":54,"./adapters/http":244,"./helpers/normalizeHeaderName":245,"./adapters/xhr":244}],249:[function(require,module,exports) {
 'use strict';
 
 var utils = require('./../utils');
@@ -1290,7 +1290,7 @@ InterceptorManager.prototype.forEach = function forEach(fn) {
 
 module.exports = InterceptorManager;
 
-},{"./../utils":55}],368:[function(require,module,exports) {
+},{"./../utils":55}],373:[function(require,module,exports) {
 'use strict';
 
 var utils = require('./../utils');
@@ -1312,30 +1312,14 @@ module.exports = function transformData(data, headers, fns) {
   return data;
 };
 
-},{"./../utils":55}],61:[function(require,module,exports) {
+},{"./../utils":55}],59:[function(require,module,exports) {
 'use strict';
 
 module.exports = function isCancel(value) {
   return !!(value && value.__CANCEL__);
 };
 
-},{}],369:[function(require,module,exports) {
-'use strict';
-
-/**
- * Determines whether the specified URL is absolute
- *
- * @param {string} url The URL to test
- * @returns {boolean} True if the specified URL is absolute, otherwise false
- */
-module.exports = function isAbsoluteURL(url) {
-  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
-  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
-  // by any combination of letters, digits, plus, period, or hyphen.
-  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
-};
-
-},{}],370:[function(require,module,exports) {
+},{}],374:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -1351,7 +1335,23 @@ module.exports = function combineURLs(baseURL, relativeURL) {
     : baseURL;
 };
 
-},{}],247:[function(require,module,exports) {
+},{}],375:[function(require,module,exports) {
+'use strict';
+
+/**
+ * Determines whether the specified URL is absolute
+ *
+ * @param {string} url The URL to test
+ * @returns {boolean} True if the specified URL is absolute, otherwise false
+ */
+module.exports = function isAbsoluteURL(url) {
+  // A URL is considered absolute if it begins with "<scheme>://" or "//" (protocol-relative URL).
+  // RFC 3986 defines scheme name as a sequence of characters beginning with a letter and followed
+  // by any combination of letters, digits, plus, period, or hyphen.
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url);
+};
+
+},{}],250:[function(require,module,exports) {
 'use strict';
 
 var utils = require('./../utils');
@@ -1439,7 +1439,7 @@ module.exports = function dispatchRequest(config) {
   });
 };
 
-},{"./../utils":55,"../defaults":56,"./transformData":368,"../cancel/isCancel":61,"./../helpers/isAbsoluteURL":369,"./../helpers/combineURLs":370}],58:[function(require,module,exports) {
+},{"./../utils":55,"../defaults":56,"./transformData":373,"../cancel/isCancel":59,"./../helpers/combineURLs":374,"./../helpers/isAbsoluteURL":375}],58:[function(require,module,exports) {
 'use strict';
 
 var defaults = require('./../defaults');
@@ -1520,7 +1520,7 @@ utils.forEach(['post', 'put', 'patch'], function forEachMethodWithData(method) {
 
 module.exports = Axios;
 
-},{"./../defaults":56,"./../utils":55,"./InterceptorManager":246,"./dispatchRequest":247}],59:[function(require,module,exports) {
+},{"./../defaults":56,"./../utils":55,"./InterceptorManager":249,"./dispatchRequest":250}],60:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -1541,7 +1541,7 @@ Cancel.prototype.__CANCEL__ = true;
 
 module.exports = Cancel;
 
-},{}],60:[function(require,module,exports) {
+},{}],61:[function(require,module,exports) {
 'use strict';
 
 var Cancel = require('./Cancel');
@@ -1600,7 +1600,7 @@ CancelToken.source = function source() {
 
 module.exports = CancelToken;
 
-},{"./Cancel":59}],62:[function(require,module,exports) {
+},{"./Cancel":60}],62:[function(require,module,exports) {
 'use strict';
 
 /**
@@ -1683,9 +1683,34 @@ module.exports = axios;
 // Allow use of default import syntax in TypeScript
 module.exports.default = axios;
 
-},{"./utils":55,"./defaults":56,"./helpers/bind":57,"./core/Axios":58,"./cancel/Cancel":59,"./cancel/CancelToken":60,"./cancel/isCancel":61,"./helpers/spread":62}],7:[function(require,module,exports) {
+},{"./utils":55,"./defaults":56,"./helpers/bind":57,"./core/Axios":58,"./cancel/isCancel":59,"./cancel/Cancel":60,"./cancel/CancelToken":61,"./helpers/spread":62}],6:[function(require,module,exports) {
 module.exports = require('./lib/axios');
 },{"./lib/axios":11}],8:[function(require,module,exports) {
+
+/**
+ * Expose `isUrl`.
+ */
+
+module.exports = isUrl;
+
+/**
+ * Matcher.
+ */
+
+var matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
+
+/**
+ * Loosely validate a URL `string`.
+ *
+ * @param {String} string
+ * @return {Boolean}
+ */
+
+function isUrl(string){
+  return matcher.test(string);
+}
+
+},{}],10:[function(require,module,exports) {
 'use strict';
 
 Object.defineProperty(exports, '__esModule', { value: true });
@@ -2836,31 +2861,6 @@ exports.superstruct = superstruct;
 exports.isStruct = isStruct;
 exports.StructError = StructError;
 //# sourceMappingURL=index.js.map
-},{}],9:[function(require,module,exports) {
-
-/**
- * Expose `isUrl`.
- */
-
-module.exports = isUrl;
-
-/**
- * Matcher.
- */
-
-var matcher = /^(?:\w+:)?\/\/([^\s\.]+\.\S{2}|localhost[\:?\d]*)\S*$/;
-
-/**
- * Loosely validate a URL `string`.
- *
- * @param {String} string
- * @return {Boolean}
- */
-
-function isUrl(string){
-  return matcher.test(string);
-}
-
 },{}],3:[function(require,module,exports) {
 "use strict";
 
@@ -3095,7 +3095,7 @@ var bulletin = function bulletin(CdEntVigiCru) {
 };
 
 module.exports = { stations: stations, observations: observations, previsions: previsions, informations: informations, bulletin: bulletin };
-},{"axios":7,"superstruct":8,"is-url":9}],6:[function(require,module,exports) {
+},{"axios":6,"is-url":8,"superstruct":10}],5:[function(require,module,exports) {
 var bundleURL = null;
 function getBundleURLCached() {
   if (!bundleURL) {
@@ -3220,7 +3220,7 @@ LazyPromise.prototype.catch = function (onError) {
   return this.promise || (this.promise = new Promise(this.executor).catch(onError));
 };
 
-},{"./bundle-url":6}],1:[function(require,module,exports) {
+},{"./bundle-url":5}],1:[function(require,module,exports) {
 "use strict";
 
 var vigicrues = require('./services/vigicrues');
@@ -3230,6 +3230,7 @@ vigicrues.observations('F700000103', 'Q').then(function (res) {
   require("_bundle_loader")(require.resolve('./modules/charts')).then(function (charts) {
     charts.draw1(observations);
     charts.draw2(observations);
+    charts.drawLastMonth(observations);
   });
 });
 },{"./services/vigicrues":3,"_bundle_loader":2,"./modules/charts":["16565e44ef99dd5ea121f95f9afa89f7.js",4]}],0:[function(require,module,exports) {
@@ -3250,7 +3251,7 @@ function Module() {
 module.bundle.Module = Module;
 
 if (!module.bundle.parent) {
-  var ws = new WebSocket('ws://localhost:53681/');
+  var ws = new WebSocket('ws://localhost:50895/');
   ws.onmessage = function(event) {
     var data = JSON.parse(event.data);
 

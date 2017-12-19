@@ -6,5 +6,6 @@ vigicrues.observations('F700000103', 'Q')
     import('./modules/charts').then(charts => {
       charts.draw1(observations)
       charts.draw2(observations)
+      charts.drawLastMonth(observations)
     })
 })
